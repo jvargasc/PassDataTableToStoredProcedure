@@ -1,15 +1,5 @@
-﻿USE Northwind
-GO
-
-IF EXISTS (SELECT * FROM sys.sql_logins WHERE name = N'dbuser')
-	DROP LOGIN [dbuser]
-GO
-
-IF EXISTS (SELECT * FROM sys.sysusers WHERE name = N'dbuser') 
-	DROP USER [dbuser]
-GO
-
-CREATE LOGIN dbuser WITH PASSWORD = 'P4$$w0rd'
+﻿IF EXISTS (SELECT * FROM sys.sysusers WHERE name = N'dbuser') 
+	DROP USER dbuser
 GO
 
 CREATE USER dbuser FOR LOGIN dbuser WITH DEFAULT_SCHEMA = dbo
@@ -31,9 +21,6 @@ CREATE TYPE dbo.CustomerTable AS TABLE
 )
 GO
 
-GRANT EXEC ON TYPE::[dbo].CustomerTable TO dbuser
-GO
-
 CREATE PROCEDURE dbo.SP_CustomerList
 @CustomerList AS CustomerTable READONLY
 
@@ -45,12 +32,15 @@ BEGIN
 END
 GO
 
-GRANT EXECUTE ON OBJECT::dbo.SP_CustomerList
-    TO dbuser;  
+GRANT EXEC ON TYPE::[dbo].[CustomerTable] TO [dbuser]
 GO
 
+GRANT EXECUTE ON dbo.SP_CustomerList TO dbuser
+GO
+
+
 DECLARE @CustomerList AS CustomerTable
- 
+
 INSERT INTO @CustomerList VALUES ('ALFKI', 'Juan Vargas')
 INSERT INTO @CustomerList VALUES ('CHOPS', 'Acacia Cuevas')
  

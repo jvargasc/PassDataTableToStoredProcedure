@@ -37,7 +37,7 @@ Public Class FormMain
 
         TmpTable.Rows.Add(TmpRow)
 
-        Using TmpConnection As New SqlConnection("Data Source=.\sqlexpress01;Initial Catalog=Northwind;Persist Security Info=True;User ID=dbuser;Password=P4$$w0rd")
+        Using TmpConnection As New SqlConnection("Data Source=bptjq4dxes.database.windows.net;Initial Catalog=Northwind;Persist Security Info=True;User ID=dbuser;Password=P4$$w0rd")
 
             TmpConnection.Open()
 
